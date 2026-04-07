@@ -6,142 +6,52 @@
     <title>Vanesa & Gustavo - ¡Nos Casamos!</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-blue: #2a4d8f;
-            --bg-cream: #f9f7f2;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-cream);
-            font-family: 'Quicksand', sans-serif;
-            color: var(--primary-blue);
-            display: flex;
-            justify-content: center;
-        }
-
-        .container {
-            max-width: 600px;
-            width: 90%;
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-        }
-
-        .details {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        /* Estilo hand-drawn para el formulario */
-        form {
-            border: 2px solid var(--primary-blue);
-            padding: 25px;
-            border-radius: 20px;
-            background: white;
-            box-shadow: 5px 5px 0px var(--primary-blue);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        input[type="text"], textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1.5px solid var(--primary-blue);
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-family: inherit;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .counter-box {
-            background: #eef2f9;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        button {
-            background-color: var(--primary-blue);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        button:hover {
-            transform: scale(1.05);
-        }
-
-        hr {
-            border: none;
-            border-top: 1px dashed var(--primary-blue);
-            margin: 40px 0;
-        }
+        :root { --primary-blue: #2a4d8f; --bg-cream: #f9f7f2; }
+        body { margin: 0; padding: 0; background-color: var(--bg-cream); font-family: 'Quicksand', sans-serif; color: var(--primary-blue); display: flex; justify-content: center; }
+        .container { max-width: 600px; width: 90%; text-align: center; padding: 40px 20px; }
+        h1 { font-family: 'Dancing Script', cursive; font-size: 3.5rem; margin-bottom: 10px; }
+        .details { font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px; }
+        form { border: 2px solid var(--primary-blue); padding: 25px; border-radius: 20px; background: white; box-shadow: 5px 5px 0px var(--primary-blue); }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; margin-bottom: 8px; font-weight: 500; }
+        input[type="text"], textarea { width: 100%; padding: 10px; border: 1.5px solid var(--primary-blue); border-radius: 8px; box-sizing: border-box; font-family: inherit; }
+        .checkbox-group { display: flex; align-items: center; gap: 10px; }
+        .counter-box { background: #eef2f9; padding: 10px; border-radius: 8px; margin-top: 10px; font-weight: bold; }
+        button { background-color: var(--primary-blue); color: white; border: none; padding: 12px 30px; border-radius: 25px; font-size: 1rem; cursor: pointer; transition: transform 0.2s; width: 100%; }
+        button:hover { transform: scale(1.02); }
+        hr { border: none; border-top: 1px dashed var(--primary-blue); margin: 40px 0; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>Vanesa & Gustavo</h1>
-    
     <div class="details">
         <p><strong>Civil:</strong> Viernes 15 de mayo, 10:50 AM</p>
         <p>en Jardín Japonés <a target="_blank" href="https://maps.app.goo.gl/bpgMWMxWAnXQZtxH8">(Av. Libertador y Av. Casares), CABA</a></p>
         <p>Luego festejamos: <a target="_blank" href="https://maps.app.goo.gl/1qyH7q6bW3BLdfzZ6">Morón 2544, CABA</a></p>
     </div>
-
     <hr>
-
     <form id="weddingForm" action="https://formspree.io/f/mqegngww" method="POST">
         <h2>Confirmación de Asistencia</h2>
-        
         <div class="form-group">
-            <label for="names">Nombres de los asistentes:</label>
+            <label for="names">Nombres de los asistentes (uno por línea o separados por coma):</label>
             <textarea id="names" name="asistentes" rows="3" placeholder="Ej: Juan Pérez, María García..." required></textarea>
         </div>
-
         <div class="form-group checkbox-group">
             <input type="checkbox" id="transport" name="necesita_transporte">
             <label for="transport">¿Necesitan transporte para el festejo?</label>
         </div>
-
         <div id="counter" class="counter-box" style="display: none;">
             Total personas para transporte: <span id="countNumber">0</span>
         </div>
-
         <input type="hidden" id="hiddenCount" name="cantidad_transporte" value="0">
-
-        <button type="submit">Enviar Confirmación</button>
+        <button type="submit" id="submitBtn">Enviar Confirmación</button>
     </form>
 </div>
 
 <script>
+    const form = document.getElementById('weddingForm');
     const namesInput = document.getElementById('names');
     const transportCheck = document.getElementById('transport');
     const counterBox = document.getElementById('counter');
@@ -150,22 +60,30 @@
 
     function updateCount() {
         const text = namesInput.value.trim();
-        if (text === "") {
-            countNumber.textContent = "0";
-            hiddenCount.value = "0";
-            return;
+        let count = 0;
+        if (text !== "") {
+            count = text.split(/[,\n]/).filter(name => name.trim() !== "").length;
         }
-        // Cuenta nombres separados por comas o saltos de línea
-        const count = text.split(/[,\n]/).filter(name => name.trim() !== "").length;
-        countNumber.textContent = count;
-        hiddenCount.value = count;
+        
+        // Solo enviamos cantidad si el checkbox está marcado
+        if (transportCheck.checked) {
+            countNumber.textContent = count;
+            hiddenCount.value = count;
+        } else {
+            hiddenCount.value = "0";
+        }
     }
 
     namesInput.addEventListener('input', updateCount);
-
+    
     transportCheck.addEventListener('change', () => {
         counterBox.style.display = transportCheck.checked ? 'block' : 'none';
         updateCount();
+    });
+
+    // Esta parte asegura que se cuente justo antes de disparar el envío
+    form.addEventListener('submit', (e) => {
+        updateCount(); 
     });
 </script>
 
